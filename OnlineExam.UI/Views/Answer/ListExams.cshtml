@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "List Exam";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <form>
+            @Html.AntiForgeryToken()
+            <h3 class="card-title">Create a new account</h3>
+            <hr />
+            <div class="form-group">
+                <div>
+                    <label for="ExamId">Exam Title</label>
+                    <select id="ExamId" name="ExamId" class="form-control">
+                        @foreach (var exam in ViewBag.Exams.Items)
+                    {
+                        <option value="@exam.Id">@exam.ExamTitle</option>
+                    }
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <button type="button" onclick="StartExam()" class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function StartExam() {
+        var selectedExamId = $("#ExamId").val();
+        var pageNumber = 1;
+
+        var queryString = '?examId=' + selectedExamId + '&pageNumber=' + pageNumber;
+
+        var url = '/Mangement/GetExam' + queryString;
+
+        window.location.href = url;
+    }
+</script>

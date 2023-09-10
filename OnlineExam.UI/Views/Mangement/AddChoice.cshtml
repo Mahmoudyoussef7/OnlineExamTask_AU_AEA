@@ -1,0 +1,45 @@
+﻿@model OnlineExam.Core.Entities.Choice
+
+@{
+    ViewData["Title"] = "AddChoice";
+if (ViewData["SuccessMessage"] != null)
+{
+    <div class="alert alert-dismissible alert-success">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>@ViewData["SuccessMessage"]</strong>
+        </div>
+}
+}
+
+<h1>Add Choice</h1>
+
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="AddChoice">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ChoiceText" class="control-label"></label>
+                <input asp-for="ChoiceText" class="form-control" />
+                <span asp-validation-for="ChoiceText" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsCorrect" /> @Html.DisplayNameFor(model => model.IsCorrect)
+                </label>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="BackToQuestions" asp-controller="Mangement" asp-route-examId="">Back to Questions</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

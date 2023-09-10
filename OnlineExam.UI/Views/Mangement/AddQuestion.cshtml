@@ -1,0 +1,50 @@
+﻿@model OnlineExam.UI.Models.QuestionViewModel
+
+@{
+    ViewData["Title"] = "Add Question";
+if (ViewData["SuccessMessage"] != null)
+{
+    <div class="alert alert-dismissible alert-success">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>@ViewData["SuccessMessage"]</strong>
+        </div>
+}
+}
+
+<h1>Add Question</h1>
+
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="AddQuestion">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="QuestionText" class="control-label"></label>
+                <input asp-for="QuestionText" class="form-control" />
+                <span asp-validation-for="QuestionText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuestionType" class="control-label"></label>
+                <select id="QuestionType" name="QuestionType" class="form-control">
+                    @foreach (var type in ViewBag.QuestionTypes.Items)
+                {
+                    <option value="@type.Id">@type.TypeName</option>
+                }
+                </select>
+                <span asp-validation-for="QuestionType" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-controller="Home">Back to Home</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

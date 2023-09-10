@@ -1,0 +1,59 @@
+﻿@model OnlineExam.UI.Models.ExamViewModel
+
+@{
+    ViewData["Title"] = "CreateExam";
+if (ViewData["SuccessMessage"] != null)
+{
+    <div class="alert alert-dismissible alert-success">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>@ViewData["SuccessMessage"]</strong>
+        </div>
+}
+}
+
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="CreateExam" asp-controller="Mangement" method="post">
+            <h3 class="card-title">Create an Exam</h3>
+            <hr />
+            <div class="form-group">
+                <label asp-for="ExamTitle" class="control-label"></label>
+                <input type="text" asp-for="ExamTitle" class="form-control" />
+                <span asp-validation-for="ExamTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamDescription" class="control-label"></label>
+                <textarea asp-for="ExamDescription" class="form-control" ></textarea>
+                <span asp-validation-for="ExamDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input type="date" asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input type="date" asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DurationInHours" class="control-label"></label>
+                <input type="number" asp-for="DurationInHours" class="form-control" />
+                <span asp-validation-for="DurationInHours" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-controller="Home">Back to welcome page</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

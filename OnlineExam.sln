@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExam.UI", "OnlineExam.UI\OnlineExam.UI.csproj", "{E6EBCF87-298D-464B-961F-A48F0395034B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExam.Core", "OnlineExam.Core\OnlineExam.Core.csproj", "{71482285-5315-4230-A176-DCD41BE1B028}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExam.Application", "OnlineExam.Application\OnlineExam.Application.csproj", "{659CE21D-25F0-4C2F-B0DA-11B9B37112B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExam.SQL", "OnlineExam.SQL\OnlineExam.SQL.csproj", "{F0A6C75E-289D-4F44-AABA-17F5A9D31E88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExam.Infrastructure", "OnlineExam.Infrastructure\OnlineExam.Infrastructure.csproj", "{E60D8164-6F77-4796-8E9F-2AB317B6F11F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E6EBCF87-298D-464B-961F-A48F0395034B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6EBCF87-298D-464B-961F-A48F0395034B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6EBCF87-298D-464B-961F-A48F0395034B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6EBCF87-298D-464B-961F-A48F0395034B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71482285-5315-4230-A176-DCD41BE1B028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71482285-5315-4230-A176-DCD41BE1B028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71482285-5315-4230-A176-DCD41BE1B028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71482285-5315-4230-A176-DCD41BE1B028}.Release|Any CPU.Build.0 = Release|Any CPU
+		{659CE21D-25F0-4C2F-B0DA-11B9B37112B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{659CE21D-25F0-4C2F-B0DA-11B9B37112B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{659CE21D-25F0-4C2F-B0DA-11B9B37112B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{659CE21D-25F0-4C2F-B0DA-11B9B37112B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0A6C75E-289D-4F44-AABA-17F5A9D31E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0A6C75E-289D-4F44-AABA-17F5A9D31E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0A6C75E-289D-4F44-AABA-17F5A9D31E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0A6C75E-289D-4F44-AABA-17F5A9D31E88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E60D8164-6F77-4796-8E9F-2AB317B6F11F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E60D8164-6F77-4796-8E9F-2AB317B6F11F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E60D8164-6F77-4796-8E9F-2AB317B6F11F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E60D8164-6F77-4796-8E9F-2AB317B6F11F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3F1BF080-027D-4AB1-8A23-604DAE223804}
+	EndGlobalSection
+EndGlobal

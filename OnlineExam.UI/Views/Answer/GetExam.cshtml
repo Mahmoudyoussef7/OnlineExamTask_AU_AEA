@@ -1,0 +1,64 @@
+﻿@model QuestionExamAnswerViewModel
+@{
+    ViewBag.Title = "Get Exam";
+
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">Online Exam</h1>
+
+    <!-- Question Container -->
+    <div class="question-container mt-4">
+        <form asp-action="SubmitAnswer" asp-controller="Answer" method="post">
+            <input type="hidden" asp-for="ExamId" name="examId" value="@Model.ExamId">
+            <input type="hidden" asp-for="Question.Id" name="QuestionId" value="@Model.Question.Id">
+            <input type="hidden" asp-for="PageNumber" name="PageNumber" value="@Model.PageNumber">
+            <div class="card question-card">
+                <div class="card-header">
+                    Question @Model.PageNumber
+                </div>
+                <div class="card-body">
+                    <h3>@Model.Question.QuestionText</h3>
+                    @if (Model.Question.QuestionTypeId == 2 && Model.Question.QuestionTypeId == 3)
+                {
+                    <div class="form-group">
+                            <label asp-for="Answer.AnswerText" class="control-label"></label>
+                            <textarea asp-for="Answer.AnswerText" class="form-control"></textarea>
+                            <span asp-validation-for="Answer.AnswerText" class="text-danger"></span>
+                        </div>
+                }
+                    @if (Model.Question.QuestionTypeId == 1 && Model.Question.QuestionTypeId == 4)
+                {
+                    <fieldset class="form-group">
+                            <legend class="mt-4">Choices</legend>
+                            @foreach (var choice in Model.Choices)
+                        {
+                            <div class="form-check">
+                                    <input class="form-check-input" type="radio" asp-for="Answer.SelectedChoiceId" name="SelectedChoiceId" value="@choice.Id" id="SelectedChoiceId">
+                                    <label class="form-check-label" asp-for="Answer.SelectedChoiceId">
+                                        @choice.ChoiceText
+                                    </label>
+                                </div>
+                        }
+                        </fieldset>
+                }
+
+                </div>
+
+
+                <div class="text-center mt-4">
+                    <span id="question-number">@Model.PageNumber of @Model.TotalPages</span>
+                    @if (Model.PageNumber < Model.TotalPages)
+                {
+                    <button type="submit" class="btn btn-primary">Next</button>
+                }
+                    @if (Model.PageNumber == Model.TotalPages)
+                {
+                    <a class="btn btn-primary" href="@Url.Action("Grade","Home", new {examId=Model.ExamId})">Submit</a>
+                }
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
