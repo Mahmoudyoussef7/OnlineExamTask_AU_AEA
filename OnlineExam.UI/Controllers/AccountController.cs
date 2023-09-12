@@ -93,13 +93,14 @@ public class AccountController : Controller
         var cookieOptions = new CookieOptions
         {
             // Set the cookie expiration time
-            Expires = DateTime.UtcNow.AddDays(7),
+            Expires = DateTime.UtcNow.AddDays(1),
             // Set the cookie to be accessible only via HTTP
             HttpOnly = true,
             // Set the cookie to be secure (HTTPS) only
             Secure = true,
             // Set the same-site policy to strict
-            SameSite = SameSiteMode.Strict
+            SameSite = SameSiteMode.Strict,
+            
         };
 
         // Set the user ID and role ID in separate cookies
