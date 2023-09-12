@@ -44,24 +44,31 @@ public class StudentProgressController : Controller
     {
         var userId = Guid.TryParse(HttpContext.Request.Cookies["UserId"], out var parsedUserId) ? parsedUserId : default;
         var user = await _unitOfWork.Users.GetByIdAsync(userId);
-        var exams = await _unitOfWork.Examinations.GetExaminationsByUserId(userId);
-        var ProgressList = new List<StudentProgressVM>();
-        foreach (var item in exams)
+        var exams = (await _unitOfWork.Answers.GetAllAsync()).Select(a => a.ExamId).ToList()
+            .Select(async item => await _unitOfWork.Examinations.GetByIdAsync(item))
+            .Select(task => task.Result)
+            .ToList();
+
+        var progressList = new List<StudentProgressVM>();
+
+        foreach (var exam in exams)
         {
-            var totalScore = _unitOfWork.Questions.GetByExamIdAsync(item.Id).Result.Sum(q => q.Points);
-            var progress = await _unitOfWork.StudentProgress.GetExamProgressByUserId(userId, item.Id);
+            var totalScore = (await _unitOfWork.Questions.GetByExamIdAsync(exam.Id)).Sum(q => q.Points);
+            var progress = await _unitOfWork.StudentProgress.GetExamProgressByUserId(userId, exam.Id);
 
             var progressVM = new StudentProgressVM
             {
-                ExamId = item.Id,
-                ExamTitle = item.ExamTitle,
+                ExamId = exam.Id,
+                ExamTitle = exam.ExamTitle,
                 StudentScore = progress.Score,
                 Timestamp = progress.Timestamp,
-                UserName = user.FirstName + " " + user.LastName,
-                TotalScore = totalScore,
+                UserName = $"{user.FirstName} {user.LastName}",
+                TotalScore = totalScore
             };
-            ProgressList.Append(progressVM);
+
+            progressList.Add(progressVM);
         }
-        return View(ProgressList);
+
+        return View(progressList);
     }
 }

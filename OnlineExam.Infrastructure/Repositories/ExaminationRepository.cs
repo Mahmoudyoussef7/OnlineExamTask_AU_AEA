@@ -52,12 +52,7 @@ public class ExaminationRepository :IExaminationRepository
         var result = await connection.QuerySingleOrDefaultAsync<Examination>(ExaminationsQueries.ExaminationById, new { Id = id });
         return result;
     }
-    public async Task<IReadOnlyList<Examination>> GetExaminationsByUserId(Guid id)
-    {
-        using IDbConnection connection = CreateConnection();
-        var result = await connection.QueryAsync<Examination>(ExaminationsQueries.ExaminationByUserId, new { UserId = id });
-        return result.ToList();
-    }
+
 
     public async Task<string> UpdateAsync(Examination entity)
     {
