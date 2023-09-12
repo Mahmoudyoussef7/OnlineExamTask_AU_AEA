@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExam.UI", "OnlineExam.UI\OnlineExam.UI.csproj", "{E6EBCF87-298D-464B-961F-A48F0395034B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineExam.UI", "OnlineExam.UI\OnlineExam.UI.csproj", "{E6EBCF87-298D-464B-961F-A48F0395034B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExam.Core", "OnlineExam.Core\OnlineExam.Core.csproj", "{71482285-5315-4230-A176-DCD41BE1B028}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineExam.Core", "OnlineExam.Core\OnlineExam.Core.csproj", "{71482285-5315-4230-A176-DCD41BE1B028}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExam.Application", "OnlineExam.Application\OnlineExam.Application.csproj", "{659CE21D-25F0-4C2F-B0DA-11B9B37112B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineExam.Application", "OnlineExam.Application\OnlineExam.Application.csproj", "{659CE21D-25F0-4C2F-B0DA-11B9B37112B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExam.SQL", "OnlineExam.SQL\OnlineExam.SQL.csproj", "{F0A6C75E-289D-4F44-AABA-17F5A9D31E88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineExam.SQL", "OnlineExam.SQL\OnlineExam.SQL.csproj", "{F0A6C75E-289D-4F44-AABA-17F5A9D31E88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExam.Infrastructure", "OnlineExam.Infrastructure\OnlineExam.Infrastructure.csproj", "{E60D8164-6F77-4796-8E9F-2AB317B6F11F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineExam.Infrastructure", "OnlineExam.Infrastructure\OnlineExam.Infrastructure.csproj", "{E60D8164-6F77-4796-8E9F-2AB317B6F11F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

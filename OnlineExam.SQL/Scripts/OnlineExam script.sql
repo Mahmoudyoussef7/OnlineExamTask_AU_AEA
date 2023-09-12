@@ -33,6 +33,7 @@ CREATE TABLE Examinations (
   ExamDescription VARCHAR(255) NOT NULL,
   StartDate DATETIME NOT NULL,
   EndDate DATETIME NOT NULL,
+  QuestionCount INT NOT NULL,
   DurationInHours decimal NOT NULL,
 );
 
@@ -42,6 +43,8 @@ CREATE TABLE Questions (
   ExamId UNIQUEIDENTIFIER NOT NULL,
   QuestionText TEXT NOT NULL,
   QuestionTypeId INT NOT NULL,
+  CorrectAnswer VARCHAR(255) NOT NULL,
+  Points INT NOT NULL
 
   FOREIGN KEY (ExamId) REFERENCES Examinations(Id)
 );
@@ -52,15 +55,20 @@ CREATE TABLE QuestionTypes (
   TypeName VARCHAR(50) NOT NULL,
 );
 
-
--- Create Choices table (for multiple-choice questions)
+-- Create Choices table
 CREATE TABLE Choices (
   Id UNIQUEIDENTIFIER PRIMARY KEY,
-  QuestionId UNIQUEIDENTIFIER NOT NULL,
   ChoiceText TEXT NOT NULL,
-  IsCorrect BIT NOT NULL,
-  
-  FOREIGN KEY (QuestionId) REFERENCES Questions(Id)
+  );
+
+  -- Create QuestionChoices 
+CREATE TABLE QuestionChoices (
+  QuestionId UNIQUEIDENTIFIER NOT NULL,
+  ChoiceId UNIQUEIDENTIFIER NOT NULL,
+
+  PRIMARY KEY (QuestionId, ChoiceId),
+  FOREIGN KEY (QuestionId) REFERENCES Questions(Id),
+  FOREIGN KEY (ChoiceId) REFERENCES Choices(Id)
 );
 
 -- Create Answers table
@@ -83,7 +91,6 @@ CREATE TABLE StudentProgress (
   Id UNIQUEIDENTIFIER PRIMARY KEY,
   UserId UNIQUEIDENTIFIER NOT NULL,
   ExamId UNIQUEIDENTIFIER NOT NULL,
-  IsCompleted Bit NOT NULL,
   Score DECIMAL(5, 2),
   Timestamp DATETIME,
   

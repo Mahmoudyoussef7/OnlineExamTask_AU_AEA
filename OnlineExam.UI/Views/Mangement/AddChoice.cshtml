@@ -2,14 +2,14 @@
 
 @{
     ViewData["Title"] = "AddChoice";
-if (ViewData["SuccessMessage"] != null)
-{
-    <div class="alert alert-dismissible alert-success">
+}
+@if (ViewData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-dismissible alert-success">
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             <strong>@ViewData["SuccessMessage"]</strong>
         </div>
-}
-}
+    }
 
 <h1>Add Choice</h1>
 
@@ -23,14 +23,9 @@ if (ViewData["SuccessMessage"] != null)
                 <input asp-for="ChoiceText" class="form-control" />
                 <span asp-validation-for="ChoiceText" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsCorrect" /> @Html.DisplayNameFor(model => model.IsCorrect)
-                </label>
-            </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Add" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -41,5 +36,7 @@ if (ViewData["SuccessMessage"] != null)
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

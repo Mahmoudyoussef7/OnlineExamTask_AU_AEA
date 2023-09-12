@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OnlineExam.Application.Interfaces;
 using OnlineExam.Core.Entities;
-using OnlineExam.Infrastructure.Repositories;
+using OnlineExam.UI.Custom;
+using OnlineExam.UI.Helper;
 using OnlineExam.UI.Models;
-using System.Drawing;
 using System.Reflection;
 
 namespace OnlineExam.UI.Controllers;
 
+[AdminAuth]
 public class MangementController : Controller
 {
     private readonly ILogger<MangementController> _logger;
@@ -37,8 +38,8 @@ public class MangementController : Controller
                 ExamDescription = model.ExamDescription,
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
-                DurationInHours = model.DurationInHours,
-                IsActive = true
+                QuestionCount = model.QuestionCount,
+                DurationInHours = model.DurationInHours
             };
             await _unitOfWork.Examinations.AddAsync(exam);
             _logger.LogInformation("Exam created Successfully.");
@@ -69,10 +70,10 @@ public class MangementController : Controller
         await _unitOfWork.Questions.AddAsync(question);
         _logger.LogInformation("Question created successfully.");
         ViewData["SuccessMessage"] = "Question created successfully.";
-        if (question.QuestionTypeId != 2 && question.QuestionTypeId != 3)
-            return RedirectToAction("AddChoice", new { examId = question.ExamId, questionId = question.Id });
-        else
+        if(question.QuestionTypeId== (int)QuestionTypeEnum.Essay || question.QuestionTypeId== (int)QuestionTypeEnum.Complete)
             return RedirectToAction("AddQuestion", new { examId = question.ExamId });
+        else
+            return RedirectToAction("AddChoice", new { examId = question.ExamId, questionId = question.Id });
     }
 
     [HttpGet]
@@ -81,6 +82,7 @@ public class MangementController : Controller
         TempData["QuestionId"] = questionId;
         ViewBag.ExamId = examId;
         return View();
+
     }
 
     [HttpPost]
@@ -88,12 +90,13 @@ public class MangementController : Controller
     {
         if (ModelState.IsValid)
         {
-            choice.QuestionId = (Guid)TempData["QuestionId"];
             await _unitOfWork.Choices.AddAsync(choice);
+            var questionChoice = new QuestionChoices { ChoiceId = choice.Id, QuestionId = (Guid)TempData["QuestionId"] };
+            await _unitOfWork.QuestionChoices.AddAsync( questionChoice);
             _logger.LogInformation("Choice created successfully.");
             ViewData["SuccessMessage"] = "Choice created successfully.";
 
-            return RedirectToAction("AddChoice", new { questionId = choice.QuestionId, examId = ViewBag.ExamId });
+            return RedirectToAction("AddChoice", new { questionId = questionChoice.QuestionId, examId = ViewBag.ExamId });
         }
         return View();
     }
@@ -105,5 +108,4 @@ public class MangementController : Controller
         return RedirectToAction("AddQuestion", new { examId = (Guid)TempData["ExamId"] });
     }
 
-    
 }

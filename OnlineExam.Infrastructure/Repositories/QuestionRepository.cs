@@ -1,13 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using OnlineExam.Core.Entities;
 using OnlineExam.SQL.Queries;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using OnlineExam.Application.Interfaces;
 

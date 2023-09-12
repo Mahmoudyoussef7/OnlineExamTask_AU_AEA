@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OnlineExam.SQL.Queries;
+﻿namespace OnlineExam.SQL.Queries;
 
 public static class ExaminationsQueries
 {
     public static string AllExaminations => "SELECT * FROM [Examinations] (NOLOCK)";
 
     public static string ExaminationById => "SELECT * FROM [Examinations] (NOLOCK) WHERE [Id] = @Id";
+    public static string ExaminationByUserId => "SELECT * FROM [Examinations] (NOLOCK) WHERE [UserId] = @UserId";
 
     public static string AddExamination =>
-        @"INSERT INTO [Examinations] ([Id], [ExamTitle], [ExamDescription], [StartDate],[EndDate],[DurationInHours]) 
-            VALUES (@Id, @ExamTitle, @ExamDescription, @StartDate, @EndDate, @DurationInHours)";
+        @"INSERT INTO [Examinations] ([Id], [ExamTitle], [ExamDescription], [StartDate],[EndDate],[QuestionCount],[DurationInHours]) 
+            VALUES (@Id, @ExamTitle, @ExamDescription, @StartDate, @EndDate, @QuestionCount, @DurationInHours)";
 
     public static string UpdateExamination =>
         @"UPDATE [Examinations] 
@@ -22,6 +17,7 @@ public static class ExaminationsQueries
             [ExamDescription] = @ExamDescription, 
             [StartDate] = @StartDate,
             [EndDate] = @EndDate,
+            [QuestionCount] = @QuestionCount,
             [DurationInHours] = @DurationInHours
         WHERE [Id] = @Id";
 

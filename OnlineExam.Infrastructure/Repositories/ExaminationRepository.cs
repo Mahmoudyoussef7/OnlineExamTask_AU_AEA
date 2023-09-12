@@ -1,13 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using OnlineExam.Core.Entities;
 using OnlineExam.SQL.Queries;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using OnlineExam.Application.Interfaces;
 
@@ -56,6 +51,12 @@ public class ExaminationRepository :IExaminationRepository
         using IDbConnection connection = CreateConnection();
         var result = await connection.QuerySingleOrDefaultAsync<Examination>(ExaminationsQueries.ExaminationById, new { Id = id });
         return result;
+    }
+    public async Task<IReadOnlyList<Examination>> GetExaminationsByUserId(Guid id)
+    {
+        using IDbConnection connection = CreateConnection();
+        var result = await connection.QueryAsync<Examination>(ExaminationsQueries.ExaminationByUserId, new { UserId = id });
+        return result.ToList();
     }
 
     public async Task<string> UpdateAsync(Examination entity)

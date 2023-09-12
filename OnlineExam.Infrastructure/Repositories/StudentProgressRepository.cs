@@ -1,13 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using OnlineExam.Core.Entities;
-using OnlineExam.UI;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using OnlineExam.SQL.Queries;
 using OnlineExam.Application.Interfaces;
@@ -37,17 +31,23 @@ public class StudentProgressRepository : IStudentProgressRepository
         return result.ToString();
     }
 
-    //public async Task<string> DeleteAsync(int id)
-    //{
-    //    using IDbConnection connection = CreateConnection();
-    //    var result = await connection.ExecuteAsync(StudentProgressQueries.DeleteStudentProgress, new { Id = id });
-    //    return result.ToString();
-    //}
+    public async Task<string> DeleteAsync(Guid id)
+    {
+        using IDbConnection connection = CreateConnection();
+        var result = await connection.ExecuteAsync(StudentProgressQueries.DeleteStudentProgress, new { Id = id });
+        return result.ToString();
+    }
 
     public async Task<IReadOnlyList<StudentProgress>> GetAllAsync()
     {
         using IDbConnection connection = CreateConnection();
         var result = await connection.QueryAsync<StudentProgress>(StudentProgressQueries.AllStudentProgress);
+        return result.ToList();
+    }
+    public async Task<IReadOnlyList<StudentProgress>> GetAllStudentProgressAsync(Guid userId)
+    {
+        using IDbConnection connection = CreateConnection();
+        var result = await connection.QueryAsync<StudentProgress>(StudentProgressQueries.StudentProgressByUserId, new {UserId=userId});
         return result.ToList();
     }
 
@@ -58,25 +58,16 @@ public class StudentProgressRepository : IStudentProgressRepository
         return result;
     }
 
-    public Task<string> UpdateAsync(StudentProgress entity)
+    public async Task<StudentProgress> GetExamProgressByUserId(Guid userId, Guid examId)
     {
-        throw new NotImplementedException();
+        using IDbConnection connection = CreateConnection();
+        var result = await connection.QuerySingleOrDefaultAsync<StudentProgress>(StudentProgressQueries.StudentProgressByUserId, new { ExamId = examId, UserId = userId });
+        return result;
     }
-
-    public Task<string> DeleteAsync(int id)
+    public async Task<string> UpdateAsync(StudentProgress entity)
     {
-        throw new NotImplementedException();
+        using IDbConnection connection = CreateConnection();
+        var result = await connection.ExecuteAsync(StudentProgressQueries.UpdateStudentProgress, entity);
+        return result.ToString();
     }
-
-    public Task<string> DeleteAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    //public async Task<string> UpdateAsync(StudentProgress entity)
-    //{
-    //    using IDbConnection connection = CreateConnection();
-    //    var result = await connection.ExecuteAsync(StudentProgresssQueries.UpdateStudentProgress, entity);
-    //    return result.ToString();
-    //}
 }

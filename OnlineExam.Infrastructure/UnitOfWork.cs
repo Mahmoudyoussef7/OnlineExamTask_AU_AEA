@@ -1,15 +1,10 @@
 ﻿using OnlineExam.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineExam.Infrastructure;
 
 public class UnitOfWork : IUnitOfWork
 {
-    public UnitOfWork(IAnswerRepository answerRepository, IUserRepository userRepository , IChoiceRepository choiceRepository, IUserRoleRepository userRoleRepository, IQuestionRepository questionRepository, IQuestionTypeRepository questionTypeRepository, IExaminationRepository examinationRepository, IStudentProgressRepository studentProgressRepository)
+    public UnitOfWork(IAnswerRepository answerRepository, IUserRepository userRepository , IChoiceRepository choiceRepository, IUserRoleRepository userRoleRepository, IQuestionRepository questionRepository, IQuestionTypeRepository questionTypeRepository, IExaminationRepository examinationRepository, IStudentProgressRepository studentProgressRepository, IQuestionChoicesRepository questionChoices)
     {
         Answers = answerRepository;
         Users = userRepository;
@@ -19,6 +14,7 @@ public class UnitOfWork : IUnitOfWork
         QuestionTypes = questionTypeRepository;
         Examinations = examinationRepository;
         StudentProgress = studentProgressRepository;
+        QuestionChoices = questionChoices;
     }
 
     public IAnswerRepository Answers { get; set; }
@@ -36,4 +32,5 @@ public class UnitOfWork : IUnitOfWork
     public IStudentProgressRepository StudentProgress { get; set; }
 
     public IUserRoleRepository UserRoles { get; set; }
+    public IQuestionChoicesRepository QuestionChoices { get; set; }
 }

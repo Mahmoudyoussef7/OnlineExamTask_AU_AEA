@@ -2,13 +2,8 @@
 using OnlineExam.Application.Interfaces;
 using OnlineExam.Core.Entities;
 using OnlineExam.SQL.Queries;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 
 namespace OnlineExam.Infrastructure.Repositories;
@@ -49,13 +44,6 @@ public class ChoiceRepository:IChoiceRepository
         var result = await connection.QueryAsync<Choice>(ChoicesQueries.AllChoices);
         return result.ToList();
     }
-    
-    public async Task<IEnumerable<Choice>> GetChoicesOfQuestion(Guid questionId)
-    {
-        using IDbConnection connection = CreateConnection();
-        var result = await connection.QueryAsync<Choice>(ChoicesQueries.ChoiceByQuestionId,new {Id=questionId});
-        return result.ToList();
-    }
 
     public async Task<Choice> GetByIdAsync(Guid id)
     {
@@ -71,6 +59,4 @@ public class ChoiceRepository:IChoiceRepository
         return result.ToString();
     }
 }
-
-
 

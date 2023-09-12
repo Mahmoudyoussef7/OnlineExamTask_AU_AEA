@@ -1,25 +1,18 @@
 ﻿@model OnlineExam.UI.Models.ExamViewModel
 
 @{
-    ViewData["Title"] = "CreateExam";
-if (ViewData["SuccessMessage"] != null)
-{
-    <div class="alert alert-dismissible alert-success">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <strong>@ViewData["SuccessMessage"]</strong>
-        </div>
-}
+    ViewData["Title"] = "Create Exam";
 }
 
+<h1>CreateExam</h1>
 <hr />
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <form asp-action="CreateExam" asp-controller="Mangement" method="post">
-            <h3 class="card-title">Create an Exam</h3>
-            <hr />
+        <form asp-action="CreateExam" method="post" asp-controller="Mangement">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ExamTitle" class="control-label"></label>
-                <input type="text" asp-for="ExamTitle" class="form-control" />
+                <input asp-for="ExamTitle" class="form-control" />
                 <span asp-validation-for="ExamTitle" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,12 +31,17 @@ if (ViewData["SuccessMessage"] != null)
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="QuestionCount" class="control-label"></label>
+                <input type="number" asp-for="QuestionCount" class="form-control" />
+                <span asp-validation-for="QuestionCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="DurationInHours" class="control-label"></label>
                 <input type="number" asp-for="DurationInHours" class="form-control" />
                 <span asp-validation-for="DurationInHours" class="text-danger"></span>
             </div>
             <br />
-            <div class="form-group">
+            <div class="form-group justify-content-center">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -51,7 +49,7 @@ if (ViewData["SuccessMessage"] != null)
 </div>
 
 <div>
-    <a asp-action="Index" asp-controller="Home">Back to welcome page</a>
+    <a asp-action="Index" asp-controller="Home">Back to Home</a>
 </div>
 
 @section Scripts {

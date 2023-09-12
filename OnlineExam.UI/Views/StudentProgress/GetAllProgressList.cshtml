@@ -1,0 +1,57 @@
+﻿@model IEnumerable<OnlineExam.UI.Models.StudentProgressVM>
+
+@{
+    ViewData["Title"] = "GetAllProgressList";
+}
+
+<h1>GetAllProgressList</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExamTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentScore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalScore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timestamp)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExamTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentScore)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalScore)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Timestamp)
+            </td>
+            <td>
+                    @Html.ActionLink("Details", "GetProgressDetails","StudentProgress", new { ExamId=item.ExamId})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

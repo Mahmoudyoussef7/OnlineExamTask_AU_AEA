@@ -1,0 +1,39 @@
+﻿@model OnlineExam.UI.Models.StudentProgressVM
+
+@{
+    ViewData["Title"] = "GetProgressDetails";
+}
+
+<h1>GetProgressDetails</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="GetProgressDetails">
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamTitle" class="control-label"></label>
+                <input asp-for="ExamTitle" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="StudentScore" class="control-label"></label>
+                <input id="StudentScore" name="StudentScore" class="form-control" value="@Model.StudentScore / @Model.TotalScore" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Timestamp" class="control-label"></label>
+                <input asp-for="Timestamp" class="form-control" disabled/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

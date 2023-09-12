@@ -2,15 +2,18 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OnlineExam.Application.Interfaces;
 using OnlineExam.Core.Entities;
+using OnlineExam.UI.Custom;
+using OnlineExam.UI.Helper;
 using OnlineExam.UI.Models;
 
 namespace OnlineExam.UI.Controllers;
 
+[StudentAuth]
 public class AnswerController : Controller
 {
     private readonly ILogger<AnswerController> _logger;
     private readonly IUnitOfWork _unitOfWork;
-  
+
     public AnswerController(ILogger<AnswerController> logger, IUnitOfWork unitOfWork)
     {
         _logger = logger;
@@ -27,42 +30,46 @@ public class AnswerController : Controller
     [HttpGet]
     public async Task<IActionResult> GetExam(Guid examId, int pageNumber = 1)
     {
-        var userId = default(Guid);
-        const int size = 1;
+        const int pageSize = 1;
 
-        Guid.TryParse(HttpContext.Request.Cookies["UserId"], out userId);
+        var userId = Guid.TryParse(HttpContext.Request.Cookies["UserId"], out var parsedUserId) ? parsedUserId : default;
 
-        var QuestionsList = await _unitOfWork.Questions.GetByExamIdAsync(examId);
-        var QuestionsCount = QuestionsList.Count();
-        var question = GetQuestionsPerPage(QuestionsList, pageNumber, size);
-        var answer = await _unitOfWork.Answers.GetAnswerStudentForQuestion(userId, examId, question.Id);
-        var choices = await _unitOfWork.Choices.GetChoicesOfQuestion(question.Id);
-        var TotalPages = (int)Math.Ceiling(QuestionsCount / (double)size);
+        var questionsList = await _unitOfWork.Questions.GetByExamIdAsync(examId);
+        var questionsCount = questionsList.Count();
+        var question = GetQuestionsPerPage(questionsList, pageNumber, pageSize);
+        var answer = await _unitOfWork.Answers.GetAnswerStudentForQuestion(question.Id, userId, examId);
+        var questionChoices = await _unitOfWork.QuestionChoices.GetChoiceIdsByQuestionIdAsync(question.Id);
+        var choicesList = new List<Choice>();
 
+        foreach (var id in questionChoices)
+        {
+            var choice = await _unitOfWork.Choices.GetByIdAsync(id);
+            if (choice != null)
+                choicesList.Add(choice);
+        }
 
-        var model = new QuestionExamAnswerViewModel()
+        var totalPages = (int)Math.Ceiling(questionsCount / (double)pageSize);
+
+        var model = new QuestionAnswerViewModel
         {
             Question = question,
-            Answer = answer,
-            Count = QuestionsCount,
-            TotalPages = TotalPages,
+            Count = questionsCount,
+            TotalPages = totalPages,
             PageNumber = pageNumber,
             ExamId = examId,
-            Choices = choices,
-            CorrectChoiceId = choices.FirstOrDefault(c => c.IsCorrect).Id,
+            Choices = choicesList,
+            Answer = answer ?? new Answer(),
         };
+
         return View(model);
     }
 
     [HttpPost]
-    public async Task<IActionResult> SubmitAnswer(QuestionExamAnswerViewModel model)
+    public async Task<IActionResult> SubmitAnswer(QuestionAnswerViewModel model)
     {
-        var userId = default(Guid);
-        Guid.TryParse(HttpContext.Request.Cookies["userId"], out userId);
+        var userId = Guid.TryParse(HttpContext.Request.Cookies["UserId"], out var parsedUserId) ? parsedUserId : default;
 
-        var Question = await _unitOfWork.Questions.GetByIdAsync(model.Question.Id);
-
-        model.Answer.QuestionId = Question.Id;
+        model.Answer.QuestionId = model.Question.Id;
         model.Answer.UserId = userId;
         model.Answer.ExamId = model.ExamId;
 
@@ -71,9 +78,40 @@ public class AnswerController : Controller
         return RedirectToAction("SubmitAnswer", "Mangment", new { ExamId = model.ExamId, pageNumber = model.PageNumber + 1 });
     }
 
+    [HttpPost]
+    public async Task<IActionResult> FinishExam(Guid examId)
+    {
+        var userId = Guid.TryParse(HttpContext.Request.Cookies["UserId"], out var parsedUserId)? parsedUserId : default;
 
+        var progress = new StudentProgress
+        {
+            ExamId = examId,
+            Timestamp = DateTime.UtcNow,
+            UserId = userId
+        };
 
+        var examQuestions = await _unitOfWork.Questions.GetByExamIdAsync(examId);
 
+        foreach (var question in examQuestions)
+        {
+            var studentAnswerOfQuestion = await _unitOfWork.Answers.GetAnswerStudentForQuestion(question.Id, userId, examId);
+
+            if (question.QuestionTypeId == (int)QuestionTypeEnum.Essay || question.QuestionTypeId == (int)QuestionTypeEnum.Complete)
+            {
+                if (question.CorrectAnswer == studentAnswerOfQuestion.AnswerText)
+                    progress.Score += question.Points;
+            }
+            else
+            {
+                var selectedChoice = await _unitOfWork.Choices.GetByIdAsync(studentAnswerOfQuestion.SelectedChoiceId.Value);
+
+                if (question.CorrectAnswer == selectedChoice.ChoiceText)
+                    progress.Score += question.Points;
+            }
+        }
+
+        return RedirectToAction("GetProgressDetails", "StudentProgress", new { ExamId = examId });
+    }
 
     private Question GetQuestionsPerPage(IEnumerable<Question> allQuestions, int pageNumber, int pageSize)
     {

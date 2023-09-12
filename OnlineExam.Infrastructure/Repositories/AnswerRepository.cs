@@ -1,13 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using OnlineExam.Application.Interfaces;
 using OnlineExam.Core.Entities;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using OnlineExam.SQL.Queries;
 
@@ -56,10 +51,11 @@ public class AnswerRepository : IAnswerRepository
         var result = await connection.QuerySingleOrDefaultAsync<Answer>(AnswersQueries.AnswerById, new { Id = id });
         return result;
     }
-    public async Task<Answer> GetAnswerStudentForQuestion(Guid userId, Guid examId, Guid questionId)
+
+    public async Task<Answer> GetAnswerStudentForQuestion(Guid questionId, Guid userId, Guid examId)
     {
         using IDbConnection connection = CreateConnection();
-        var result = await connection.QuerySingleOrDefaultAsync<Answer>(AnswersQueries.GetAnswerStudentForQuestion, new { UserId = userId, ExamId = examId, QuestionId = questionId });
+        var result = await connection.QuerySingleOrDefaultAsync<Answer>(AnswersQueries.GetAnswerStudentForQuestion, new { QuestionId = questionId, UserId = userId, ExamId = examId });
         return result;
     }
 
@@ -68,12 +64,5 @@ public class AnswerRepository : IAnswerRepository
         using IDbConnection connection = CreateConnection();
         var result = await connection.ExecuteAsync(AnswersQueries.UpdateAnswer, entity);
         return result.ToString();
-    }
-
-    public async Task<List<Answer>> GetAnswerExamUser(Guid userId, Guid examId)
-    {
-        using IDbConnection connection = CreateConnection();
-        var result = await connection.QueryAsync<Answer>(AnswersQueries.GetAnswerExamUser, new {ExamId=examId, UserId=userId});
-        return result.ToList();
     }
 }

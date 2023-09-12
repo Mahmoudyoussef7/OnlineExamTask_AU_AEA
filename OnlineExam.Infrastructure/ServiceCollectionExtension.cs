@@ -1,11 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using OnlineExam.Application.Interfaces;
 using OnlineExam.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineExam.Infrastructure;
 
@@ -18,6 +13,7 @@ public static class ServiceCollectionExtension
         .AddTransient<IChoiceRepository, ChoiceRepository>()
         .AddTransient<IQuestionRepository, QuestionRepository>()
         .AddTransient<IQuestionTypeRepository, QuestionTypeRepository>()
+        .AddTransient<IQuestionChoicesRepository, QuestionChoicesRepository>()
         .AddScoped<IUserRoleRepository, UserRoleRepository>()
         .AddTransient<IStudentProgressRepository, StudentProgressRepository>()
         .AddTransient<IAnswerRepository, AnswerRepository>()

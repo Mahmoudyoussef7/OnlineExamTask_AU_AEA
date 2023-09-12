@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OnlineExam.Application.Interfaces;
+﻿namespace OnlineExam.Application.Interfaces;
 
 public interface IUnitOfWork
 {
@@ -16,4 +10,5 @@ public interface IUnitOfWork
     IExaminationRepository Examinations { get; }
     IStudentProgressRepository StudentProgress { get; }
     IUserRoleRepository UserRoles { get; }
+    IQuestionChoicesRepository QuestionChoices { get; }
 }
