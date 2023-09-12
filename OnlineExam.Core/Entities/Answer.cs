@@ -6,5 +6,5 @@ public class Answer : BaseEntity
     public Guid ExamId { get; set; }
     public Guid QuestionId { get; set; }
     public Guid? SelectedChoiceId { get; set; }
-    public string? AnswerText { get; set; }
+    public string AnswerText { get; set; } = string.Empty;
 }

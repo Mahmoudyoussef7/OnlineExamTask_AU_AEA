@@ -6,7 +6,7 @@
     <div class="col-lg-6">
         <form>
             @Html.AntiForgeryToken()
-            <h3 class="card-title">Create a new account</h3>
+            <h3 class="card-title">Select Exam</h3>
             <hr />
             <div class="form-group">
                 <div>
@@ -21,7 +21,7 @@
             </div>
             <br />
             <div class="form-group">
-                <button type="button" onclick="StartExam()" class="btn btn-primary">Register</button>
+                <button type="button" onclick="StartExam()" class="btn btn-primary">Start</button>
             </div>
         </form>
     </div>
@@ -34,7 +34,7 @@
 
         var queryString = '?examId=' + selectedExamId + '&pageNumber=' + pageNumber;
 
-        var url = '/Mangement/GetExam' + queryString;
+        var url = '/Answer/GetExam' + queryString;
 
         window.location.href = url;
     }

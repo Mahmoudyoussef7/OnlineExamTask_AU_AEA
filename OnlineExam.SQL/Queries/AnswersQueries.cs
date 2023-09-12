@@ -10,7 +10,7 @@ public static class AnswersQueries
 
     public static string AddAnswer =>
         @"INSERT INTO [Answers] ([Id],[UserId], [ExamId], [QuestionId], [AnswerText],[SelectedChoiceId]) 
-            VALUES (@Id, @StudentId, @ExamId, @QuestionId,@AnswerText,@SelectedChoiceId)";
+            VALUES (@Id, @UserId, @ExamId, @QuestionId,@AnswerText,@SelectedChoiceId)";
 
     public static string UpdateAnswer =>
         @"UPDATE [Answers] 

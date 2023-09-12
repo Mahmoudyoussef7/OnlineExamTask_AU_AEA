@@ -72,13 +72,15 @@ public class AnswerController : Controller
         model.Answer.QuestionId = model.Question.Id;
         model.Answer.UserId = userId;
         model.Answer.ExamId = model.ExamId;
-
+        model.Answer.AnswerText = model.AnswerText;
+        model.Answer.SelectedChoiceId = model.SelectedChoiceId;
+      
         await _unitOfWork.Answers.AddAsync(model.Answer);
 
-        return RedirectToAction("SubmitAnswer", "Mangment", new { ExamId = model.ExamId, pageNumber = model.PageNumber + 1 });
+        return RedirectToAction("SubmitAnswer", "Answer", new { ExamId = model.ExamId, pageNumber = model.PageNumber + 1 });
     }
 
-    [HttpPost]
+    [HttpGet]
     public async Task<IActionResult> FinishExam(Guid examId)
     {
         var userId = Guid.TryParse(HttpContext.Request.Cookies["UserId"], out var parsedUserId)? parsedUserId : default;
